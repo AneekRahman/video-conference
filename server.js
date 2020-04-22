@@ -71,11 +71,7 @@ io.on("connection", function(socket){
 
         }
 
-        console.log("Userlist: " + cleanArray(userList))
-
-        console.log("User count: " + cleanArray(userList).length)
-
-        console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        console.log(userList)
 
     })
 
@@ -99,11 +95,11 @@ io.on("connection", function(socket){
 
         io.sockets.emit("showActive", JSON.stringify(cleanArray(userList)));
 
-        console.log("User count: " + clean.length);
+        console.log("User disconnected: " + userI);
 
-        console.log("Userlist: " + clean);
+        console.log(clean);
 
-        console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        console.log("and Real: " + userList)
 
     })
 
@@ -111,13 +107,7 @@ io.on("connection", function(socket){
 
 })
 
-srv = server.listen( 443, "192.168.0.102", function(){
-    
-    console.log("Listening 443") 
-
-    console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-
-})
+srv = server.listen( 443, "192.168.0.102", function(){console.log("Listening 443")})
 
 app.use('/peerjs', require('peer').ExpressPeerServer(srv, {
 	debug: false

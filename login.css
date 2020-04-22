@@ -7,20 +7,20 @@ body{
     height: 100vh;
     background: linear-gradient(270deg, #a24bcf, #4b79cf, #4bc5cf);
     background-size: 600% 600%;
-    -webkit-animation: AnimationName 20s ease infinite;
-    -moz-animation: AnimationName 20s ease infinite;
-    animation: AnimationName 20s ease infinite;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+    animation: AnimationName 30s ease infinite;
     justify-content: center;
     align-items: center;
 }
 
 h3{
     
-    margin: 0 0 2em 0;
+    margin: 0 0 3em 0;
     font-family: raleway;
-    font-size: 1.3em;
-    font-weight: 400;
-    color: #fff
+    font-size: .8em;
+    font-weight: 800;
+    color: #dfdfdf
     
 }
 
@@ -39,31 +39,31 @@ form{
 input{
     
     margin: .5em 0;
-    padding: .9em;
-    border: 5px solid rgba(255,255,255,0);
+    padding: 1em;
+    border: 3px solid rgba(255,255,255,0);
     outline: none;
     width: 100%;
     transition: .3s;
-    background-color: rgba(255,255,255,.8);
+    background-color: rgba(255,255,255,.4);
 
     
 }
 
 input::placeholder{
     
-    color: rgba(0,0,0,0.4);
+    color: #dfdfdf;
     
 }
 
 input:focus{
     
-    border-color: rgba(255,255,255,.5);
+    border-color: rgba(255,255,255,.2);
     
 }
 
 button{
     
-    padding: 1em;
+    padding: 1.3em;
     margin: .5em 0;
     width: 40%;
     font-weight: 600;
@@ -71,10 +71,9 @@ button{
     border: none;
     transition: .3s;
     outline: none;
-    background-color: rgba(255,255,255,1);
+    background-color: rgba(255,255,255,.4);
     font-size: .6em;
-    color: #000;
-    border: 5px solid transparent;
+    color: #dfdfdf
     
 }
 
