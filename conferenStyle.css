@@ -3,85 +3,180 @@
 body{
     
     margin: 0;
+    
+}
+
+
+#topPanel{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    background-color: #1e74ff;
+    box-shadow: 0 .4em .7em #0046ba;
+    z-index: 100;
+    position: relative;
+    
+}
+
+#topPanel h4{
+    
+    margin: 0 2em;
+    color: #fff;
+    font-family: "raleway";
+    font-weight: 500;
+    
+}
+
+#topPanel button{
+    
+    background-color: #fff;
+    padding: .4em 1em;
+    border-radius: 10em;
+    font-size: 1em;
+    border: none;
+    outline: none;
+    
+}
+
+#topPanel button:active{
+    
+    box-shadow: inset 0 0 1em #aaa;
+    
+}
+
+#activeNow{
+    
+    padding: 1em 3em;
+    margin:  0 1em;
+    background-color: #0450cc;
+    z-index: -1;
+    
+}
+
+#activeNow p{
+    
+    margin: 0;
+    color: #fff;
+    font-family: raleway;
+    
+}
+
+#topDiv{
+    
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000;
-    
-}
-
-#userVideo{
-    
-    height: 100%;
-    
-}
-
-#bottomHolder{
-    
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    padding: 1em 1em .3em 1em;
     width: 100%;
-    background-color: rgba(255,255,255, .9);
+    height: 34em
+    
+    
+}
+
+#mainVidHolder{
+    
+    width: 60%;
+    height: 100%;
+    position: relative;
+
+}
+
+#mainVidHolder video{
+    
+    width: 100%;
+    height: 100%;
+    background: #aaa !important;
+    display: block !important
+    
+}
+
+#liveShower{
+    
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    width: 100%;
+    padding: .8em 1em;
+    font-family: "open sans";
+    font-size: 1.2em;
+    background-image: linear-gradient(transparent, rgba(0,0,0,.5) 60%);
+    display: flex;
+    align-items: center;
+    
+    
+}
+
+#liveShower p{
+    
+    margin: 0;
+    border: 3px solid red;
+    padding: 0 .4em .1em
+    
+}
+
+#liveShower span{
+    
+    margin-right: .4em;
+    color: red;
+    
+}
+
+#rightVids{
+    
+    width: 40%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    margin-left: .3em;
     
 }
 
-#toggleBtn{
+#rightVids video{
+    
+    height: 50%;
+    width: 100%;
+    display: none;
+    
+}
+
+#bottomVids{
     
     width: 100%;
-    background-color: rgba(0,0,0,.1);
     display: flex;
-    justify-content: center;
-    padding: .2em;
-    font-size: 1.2em
+    padding: 0 .7em 0 1em;
+    flex-wrap: wrap;
     
 }
 
-#vidHolder{
+#bottomVids video{
     
-    padding: .5em;
-    display: flex;
-    overflow: scroll;;
-    
-}
-
-#vidHolder video{
-    
-    height: 10em;
-    width: auto;
-    margin-right: .5em;
-    background-color: rgba(0,0,0,0.3);
+    width: calc(33.33% - .3em);
+    height: 14em;
+    margin-right: .3em;
+    margin-bottom: .3em;
+    display: none;
     
 }
 
-#controls{
+
+video{
     
-    left: 2em;
-    display: flex;
-    flex-direction: column-reverse;
-    position: absolute;
-    margin-top: -8em;
-    align-items: center;
+    background-color: #000 !important;
     
 }
 
-#controls div{
-    
-    background-color: rgba(255,255,255, .8);
+#copyR{
+
+    padding: .7em 1em 1em 1em;
     font-family: "raleway";
-    font-size: 1.3em;
-    padding: .4em 1em;
-    border-radius: 2em;
-    margin-bottom: .5em;
-    display: inline-block;
-    
+
 }
 
-#controls div span{
+#copyR span{
     
-    font-size: 1.1em;
+    font-size: .8em;
     
 }
-

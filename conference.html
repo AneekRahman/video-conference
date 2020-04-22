@@ -1,8 +1,23 @@
+<!--
+
+    /*
+
+    COPYRIGHT Aneek Rahman, 2018. ALL RIGHTS RESERVED. THE BELOW WRITTEN CODE IS NOT FOR COPY, REUSE, MODIFICATION,
+    OR ANY KIND OF ADAPTATION. ANY KIND OF USE OF THIS CODE FOR PERSONAL, ORGANIZATIONAL, SPECIALLY BUSINESS PURPOSES IS PROHIBITED.
+    IF YOU USE, ADAPT, REUSE, MODIFY AND USE, COPY THIS CODE IT WILL BE PLAGARISM AND THE OWNER HAS THE RIGHT TO PUSH
+    CHARGES AND TAKE ACTION. PLEASE REPORT ANY KIND OF PLAGARISM OF THIS CODE IF IT COMES TO YOUR KNOWLEDGE. THANK YOU.
+
+    */
+
+-->
+
+
+<!DOCTYPE html>
 <html>
 
     <head>
     
-        <title>Mill Mahtim</title>
+        <title>Video Call - v1 Aneek's Proj</title>
         <link href='conferenStyle.css' type="text/css" rel="stylesheet">
   
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Raleway:300,400,700" rel="stylesheet">
@@ -12,79 +27,520 @@
     </head>
     
     <body>
-        
-        <video id="userVideo"></video>
-    
-    
-        <div id="bottomHolder">
-            
-            <div id="controls">
-        
-                <div id="call"><span class="mdi mdi-phone-in-talk"></span> Call</div>
 
-                <div id="mute"><span class="mdi mdi-volume-mute"></span> Mute</div>
+        
+        
+        <div id="topPanel">
+        
+            <h4>Your User ID: <b id="userID"></b></h4>
             
+            <button id="login">Login</button>
+            
+            <button id="call">Call Group</button>
         
         </div>
-            
-            <div id="toggleBtn"><span class="mdi mdi-arrow-up-drop-circle"></span></div>
+
+        <div id="activeNow">
+
+            <p>Active Now ( <b id="activeCount">0</b> ) : <span id="activeNames"></span></p>
+
+        </div>
         
-            <div id="vidHolder">
+        
+        <div id="topDiv">
             
-                <video></video>
-                <video></video>
-                <video></video>
-                <video></video>
+            <div id="mainVidHolder">
+            
+                <video id="mainVideo"></video>
                 
+                <div id="liveShower">
+                    
+                    <span class="mdi mdi-radiobox-marked"></span>
+                
+                    <p id="live">Live</p>
+                    
+                </div>
+            
             </div>
         
+            
+            
+            <div id="rightVids">
+            
+                <video id="userVideo"></video>
+                            
+            </div>
+        
+        </div>
+        
+        <div id="bottomVids">
+        
+            <video></video>
+                
+            <video></video>
+
+            <video></video>
+                
+            <video></video>
+
+            <video></video>
+                
+            <video></video>
+
+            <video></video>
+
+            <video></video>
+                
+            <video></video>
+        
+        </div>
+        
+        <div id="copyR">
+            <span>&copy; Copyright Aneek Rahman, 2018. All rights reserved.</span>
         </div>
         
         <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.min.js"></script>
+
+        <script src="/socket.io/socket.io.js"></script>
+
+        <script src="/28c9cwa8n.js"></script>
         
         <script>
-            
-            var upCount = 0;
-            
-            $("#vidHolder").hide();
-            
-            
-            $("#toggleBtn").click(function(){
+
+            $("#login").click(function(){
+                                
+                location.reload()
                 
-                if(upCount == 0){
-                    
-                    $("#vidHolder").show();
-                    
-                    upCount = 1;
-                    
-                }else{
-                    
-                    $("#vidHolder").hide();
-                    
-                    upCount = 0;
-                    
+            })
+
+            var socket = io();
+
+            $(window).bind('beforeunload',function(){
+
+                socket.emit("forceDisconnect")
+
+            });
+
+            var mainUser = "aneek";
+
+            var uname = null;
+
+            var userID = null;
+
+            var peer = null;
+
+            function login(){
+
+                var username = prompt("Enter username:");
+
+                var password = prompt("Enter password for [" + username + "]:");
+
+                var ok = 0;
+
+                if(userList[username] == password){
+
+                    ok = 1;
+
                 }
+
+
+                if(ok == 1){
+
+                    alert("Welcome, " + username + ". Logged In!");
+
+                    socket.emit("uid", username);
+
+                    uname = username;
+                    
+                    $("#login").hide();
+
+                }else{
+
+                    alert("Incorrect username or password. Logging in as a Guest");
+
+                }
+
+            }
+
+            if(location.hash != "#member"){
+
+                login();
+
+                var peer = new Peer( uname, {
+
+                    host: location.hostname,
+                    port: location.port || (location.protocol === 'https:' ? 443 : 80),
+                    path: '/peerjs'
+
+                })
+
+            }else{
+
+                var peer = new Peer({
+
+                    host: location.hostname,
+                    port: location.port || (location.protocol === 'https:' ? 443 : 80),
+                    path: '/peerjs'
+
+                })
+
+            }
+
+            var userVideo = document.querySelector("#userVideo");
+
+            var mainVideo = document.querySelector("#mainVideo");
+
+            navigator.mediaDevices.getUserMedia({video: {
+                
+                height: {
+                    
+                    min: 40,
+                    ideal: 80,
+                    max: 200
+
+                },
+                width: {
+                    
+                    min: 80,
+                    ideal: 140,
+                    max: 400,
+
+                },
+                frameRate: {
+
+                    min: 17,
+                    ideal: 23,
+                    max: 30
+
+                },
+                facingMode: "user"
+
+            }, audio: false}).then(function(stream){
+
+                if(uname == mainUser){
+
+                   if(navigator.mozGetUserMedia){
+
+                        mainVideo.mozSrcObject = stream;
+
+                    }else{ 
+
+                        mainVideo.srcObject = stream;
+                        
+                    }
+
+                    userVideo.style.display = "none"
+
+                    mainVideo.play(); 
+
+                }else{
+
+                    userVideo.style.display = "block"
+
+                    if(navigator.mozGetUserMedia){
+
+                        userVideo.mozSrcObject = stream;
+
+                    }else{ 
+
+                        userVideo.srcObject = stream;
+
+                    }
+
+                    userVideo.play(); 
+
+                }
+
+                
+
+                window.localStream = stream;
+
+
+            }).catch(function(e){
+
+                alert(e)
                 
             })
-            
-            
-        
-            var userVidTag = document.querySelector("#userVideo");
-            
-            navigator.getUserMedia({video: true}, function(stream){
-               
-                userVidTag.src = window.URL.createObjectURL(stream);
+                    
+                
 
-                userVidTag.play();
-               
-               }, function(err){
+            
+            peer.on("open", function(id){
 
-                if(err) throw err;
+                $("#userID").text(id);
 
             })
+
+
+            socket.emit("getActive")
+
+            socket.on("showActive", function(json){
+
+                var activeList = JSON.parse(json);
+
+                $("#activeCount").text(activeList.length);
+
+                $("#activeNames").text(activeList);
+
+                var mainMatch = searchStringInArray(mainUser, activeList);
+
+                if(mainMatch == -1){
+
+                    mainVideo.srcObject = null;
+
+                    $("#live").text(mainUser + " not Active yet")
+
+                }else{
+
+                    $("#live").text(mainUser + " LIVE")
+
+                }
+
+            })
+
+            function searchStringInArray (str, strArray) {
+                for (var j=0; j<strArray.length; j++) {
+                    if (strArray[j].match(str)) return j;
+                }
+                return -1;
+            }
+
+
+            var peerCountCall = 2;
+
+            var peerVideo = document.querySelectorAll("video")
+
+            // WHEN A CALL ARRIVES FROM SOMEONE ELSE
+
+            peer.on('call', function(call){
+
+                call.answer(window.localStream);
+
+                var preMatch = searchStringInArray(call.peer, callerList)
+
+                if(preMatch == -1) return;
+
+                if(call.peer == mainUser){
+
+                    call.on('stream', function(stream){
+
+                        if(navigator.mozGetUserMedia){
+
+                            mainVideo.mozSrcObject = stream;
+
+                            }else{ 
+
+                            mainVideo.srcObject = stream;
+
+                        }
+
+                        mainVideo.play();
+
+                    });
+
+                }else{
+
+                    peerVideo[peerCountCall].style.display = "block";
+
+                    call.on('stream', function(stream){
+
+                        if(navigator.mozGetUserMedia){
+
+                            peerVideo[peerCountCall].mozSrcObject = stream;
+
+                            }else{ 
+
+                            peerVideo[peerCountCall].srcObject = stream;
+
+                        }
+
+                        peerVideo[peerCountCall].play();
+
+                        peerCountCall++;
+
+                    });
+
+                }
+
+                
+
+            });
+
+            // WHEN A CALL ARRIVES FROM SOMEONE ELSE
+
+            // WHEN USER CALLS SOMEONE
+
+            var countUserCall = 0;
+
+            var userCallLimit = 3;
+
+            mUserList = null;
+
+            function call1(){
+
+                if(countUserCall < userCallLimit){
+
+                    var call = peer.call(mUserList[countUserCall], window.localStream);
+
+                    call.on('stream', function(stream){
+
+                        if(mUserList[countUserCall] == mainUser){
+
+                            if(navigator.mozGetUserMedia){
+
+                                mainVideo.mozSrcObject = stream;
+
+                            }else{ 
+
+                                mainVideo.srcObject = stream;
+
+                            }
+
+                            mainVideo.play();
+
+                            countUserCall++;
+
+                            call2();
+
+                        }else{
+
+                            peerVideo[countUserCall + 2].style.display = "block";
+
+                            if(navigator.mozGetUserMedia){
+
+                                peerVideo[countUserCall + 2].mozSrcObject = stream;
+
+                            }else{ 
+
+                                peerVideo[countUserCall + 2].srcObject = stream;
+
+                            }
+
+                            peerVideo[countUserCall + 2].play();
+
+                            countUserCall++;
+
+                            call2();
+
+                        }
+
+            
+                    })
+
+                }
+
+            }
+            
+
+
+            function call2(){
+
+                if(countUserCall < userCallLimit){
+
+                    var call = peer.call(mUserList[countUserCall], window.localStream);
+
+                    call.on('stream', function(stream){
+
+                        if(mUserList[countUserCall] == mainUser){
+
+                            if(navigator.mozGetUserMedia){
+
+                                mainVideo.mozSrcObject = stream;
+
+                            }else{ 
+
+                                mainVideo.srcObject = stream;
+
+                            }
+
+                            mainVideo.play();
+
+                            countUserCall++;
+
+                            call1();
+
+                        }else{
+
+                            peerVideo[countUserCall + 2].style.display = "block";
+
+                            if(navigator.mozGetUserMedia){
+
+                                peerVideo[countUserCall + 2].mozSrcObject = stream;
+
+                            }else{ 
+
+                                peerVideo[countUserCall + 2].srcObject = stream;
+
+                            }
+
+                            peerVideo[countUserCall + 2].play();
+
+                            countUserCall++;
+
+                            call1();
+
+                        }
+
+                        
+
+                    })
+
+                }
+
+            }
+
+            $("#call").click(function(){
+
+                socket.emit("callUserList");
+
+            })
+
+            // SOCKECT SENDING MSGS
+
+            socket.on("reload", function(json){
+
+
+
+                var userList = JSON.parse(json);
+
+                userList.clean(uname);
+
+                if(mUserList == userList){
+
+
+
+                }else{
+
+                    mUserList = userList;
+
+                }
+
+                userCallLimit = userList.length;
+
+                call1();
+
+            })
+
+            // SOCKET SENDING MSGS
+            
+            
+            // UI SHITS
+            
+            
+            Array.prototype.clean = function(deleteValue) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i] == deleteValue) {         
+                    this.splice(i, 1);
+                    i--;
+                    }
+                }
+                return this;
+                };
             
         
         

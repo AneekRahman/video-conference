@@ -1,0 +1,20 @@
+{
+  "name": "aneekvidmach",
+  "version": "1.0.0",
+  "description": "A video conference website for everyone",
+  "main": "server.js",
+  "scripts": {
+    "test": "console.log(\"Swroks?\")",
+    "start": "node server.js"
+  },
+  "author": "Aneek Rahman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "peer": "^0.2.8",
+    "socket.io": "^2.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  }
+}

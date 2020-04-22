@@ -1,0 +1,87 @@
+<!--
+
+    /*
+
+    COPYRIGHT Aneek Rahman, 2018. ALL RIGHTS RESERVED. THE BELOW WRITTEN CODE IS NOT FOR COPY, REUSE, MODIFICATION,
+    OR ANY KIND OF ADAPTATION. ANY KIND OF USE OF THIS CODE FOR PERSONAL, ORGANIZATIONAL, SPECIALLY BUSINESS PURPOSES IS PROHIBITED.
+    IF YOU USE, ADAPT, REUSE, MODIFY AND USE, COPY THIS CODE IT WILL BE PLAGARISM AND THE OWNER HAS THE RIGHT TO PUSH
+    CHARGES AND TAKE ACTION. PLEASE REPORT ANY KIND OF PLAGARISM OF THIS CODE IF IT COMES TO YOUR KNOWLEDGE. THANK YOU.
+
+    */
+
+-->
+
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+    
+        <title>Video Call - v1 Aneek's Proj</title>
+        <link href='login.css' type="text/css" rel="stylesheet">
+  
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Raleway:300,400,700" rel="stylesheet">
+        
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.2.43/css/materialdesignicons.min.css">
+        
+        <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    
+    </head>
+    
+    <body>
+        
+        <h3>LOGO</h3>
+
+        <form>
+        
+            <input type="text" id='username' placeholder="Enter username">
+            
+            <input type="text" id='pass' placeholder="Enter password">
+            
+            <button type="submit">LOGIN</button>
+        
+        </form>
+
+    </body>
+    
+    <script>
+    
+        $("form").submit(function(e){
+            
+            e.preventDefault();
+            
+            $("button").css({
+                
+                "background-color" : "#000",
+                "color" : "#fff"
+                
+            })
+            
+            var uname = $("#username").val();
+            
+            var pass = $("#pass").val();
+            
+            $.post("https://"  + location.hostname + "/login-user", {uname : uname, pass: pass}, function(cb){
+                
+                if(cb == "pro"){
+                    
+                    window.location = "conference.html";
+                    
+                }else{
+
+                    alert("Wrong username or password")
+
+                }
+                
+            })
+            
+            
+        })
+    
+    </script>
+
+</html>
