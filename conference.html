@@ -1,0 +1,97 @@
+<html>
+
+    <head>
+    
+        <title>Mill Mahtim</title>
+        <link href='conferenStyle.css' type="text/css" rel="stylesheet">
+  
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Raleway:300,400,700" rel="stylesheet">
+        
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.2.43/css/materialdesignicons.min.css">
+    
+    </head>
+    
+    <body>
+        
+        <video id="userVideo"></video>
+    
+    
+        <div id="bottomHolder">
+            
+            <div id="controls">
+        
+                <div id="call"><span class="mdi mdi-phone-in-talk"></span> Call</div>
+
+                <div id="mute"><span class="mdi mdi-volume-mute"></span> Mute</div>
+            
+        
+        </div>
+            
+            <div id="toggleBtn"><span class="mdi mdi-arrow-up-drop-circle"></span></div>
+        
+            <div id="vidHolder">
+            
+                <video></video>
+                <video></video>
+                <video></video>
+                <video></video>
+                
+            </div>
+        
+        </div>
+        
+        <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+        
+        <script>
+            
+            var upCount = 0;
+            
+            $("#vidHolder").hide();
+            
+            
+            $("#toggleBtn").click(function(){
+                
+                if(upCount == 0){
+                    
+                    $("#vidHolder").show();
+                    
+                    upCount = 1;
+                    
+                }else{
+                    
+                    $("#vidHolder").hide();
+                    
+                    upCount = 0;
+                    
+                }
+                
+            })
+            
+            
+        
+            var userVidTag = document.querySelector("#userVideo");
+            
+            navigator.getUserMedia({video: true}, function(stream){
+               
+                userVidTag.src = window.URL.createObjectURL(stream);
+
+                userVidTag.play();
+               
+               }, function(err){
+
+                if(err) throw err;
+
+            })
+            
+        
+        
+        </script>
+        
+    </body>
+    
+</html>
+
+

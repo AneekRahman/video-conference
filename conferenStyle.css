@@ -1,0 +1,87 @@
+*{box-sizing: border-box}
+
+body{
+    
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    
+}
+
+#userVideo{
+    
+    height: 100%;
+    
+}
+
+#bottomHolder{
+    
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255,255,255, .9);
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#toggleBtn{
+    
+    width: 100%;
+    background-color: rgba(0,0,0,.1);
+    display: flex;
+    justify-content: center;
+    padding: .2em;
+    font-size: 1.2em
+    
+}
+
+#vidHolder{
+    
+    padding: .5em;
+    display: flex;
+    overflow: scroll;;
+    
+}
+
+#vidHolder video{
+    
+    height: 10em;
+    width: auto;
+    margin-right: .5em;
+    background-color: rgba(0,0,0,0.3);
+    
+}
+
+#controls{
+    
+    left: 2em;
+    display: flex;
+    flex-direction: column-reverse;
+    position: absolute;
+    margin-top: -8em;
+    align-items: center;
+    
+}
+
+#controls div{
+    
+    background-color: rgba(255,255,255, .8);
+    font-family: "raleway";
+    font-size: 1.3em;
+    padding: .4em 1em;
+    border-radius: 2em;
+    margin-bottom: .5em;
+    display: inline-block;
+    
+}
+
+#controls div span{
+    
+    font-size: 1.1em;
+    
+}
+
